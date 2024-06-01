@@ -3,6 +3,6 @@
         { "path": "force-app", "default": true },
         { "path": "screenflowstandard", "default": false}
     ],
-    "namespace": "",
+    "namespace": """",
     "sourceApiVersion": "60.0"
 }

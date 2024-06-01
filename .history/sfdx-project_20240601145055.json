@@ -1,8 +1,8 @@
 {
     "packageDirectories": [
         { "path": "force-app", "default": true },
-        { "path": "screenflowstandard", "default": false}
+        { "path": "screenflowstandard", "default": falses}
     ],
-    "namespace": "",
+    "namespace": null,
     "sourceApiVersion": "60.0"
 }
