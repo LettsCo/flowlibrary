@@ -1,0 +1,25 @@
+minimum_cumulusci_version: '3.86.0'
+project:
+    name: FlowLibrary
+    package:
+        name: FlowLibrary
+        api_version: '60.0'
+    git:
+        default_branch: 'main'
+    source_format: sfdx
+
+tasks:
+    robot:
+        options:
+            suites: robot/FlowLibrary/tests
+            options:
+                outputdir: robot/FlowLibrary/results
+
+    robot_testdoc:
+        options:
+            path: robot/FlowLibrary/tests
+            output: robot/FlowLibrary/doc/FlowLibrary_tests.html
+
+    run_tests:
+        options:
+            required_org_code_coverage_percent: 75
