@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <decisions>
+        <name>Check_StopEmailSend</name>
+        <label>Check StopEmailSend</label>
+        <locationX>446</locationX>
+        <locationY>242</locationY>
+        <defaultConnectorLabel>Allow Email Send</defaultConnectorLabel>
+        <rules>
+            <name>StopEmailSend_TRUE</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>StopEmailSend</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>StopEmailSend = TRUE</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>This decision will always evaluate to &quot;No Fault&quot; at the beginning of the flow. It&apos;s here so that the screen has somewhere to &quot;live&quot; in auto-layout.</description>
+        <name>Handle_Fault</name>
+        <label>Handle Fault</label>
+        <locationX>248</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Check_StopEmailSend</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Fault (Main Flow)</defaultConnectorLabel>
+        <rules>
+            <name>Fault_is_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Flow.FaultMessage</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fault_Screen</targetReference>
+            </connector>
+            <label>Fault is Set</label>
+        </rules>
+    </decisions>
+    <description>Provides the standard recordId and ids inputs, as well as a default fault handling screen. Provides a boolean to prevent email send.</description>
+    <environments>Default</environments>
+    <interviewLabel>Basic Screen Flow with ID Inputs {!$Flow.CurrentDateTime}</interviewLabel>
+    <isTemplate>true</isTemplate>
+    <label>Basic Screen Flow with ID Inputs</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <screens>
+        <description>Point the flow to this screen for any fault paths.</description>
+        <name>Fault_Screen</name>
+        <label>Fault Screen</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>display_Fault</name>
+            <fieldText>&lt;p&gt;There has been an error.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>122</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Handle_Fault</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>The default collection when you select from a list view.</description>
+        <name>ids</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The default variable when you run a flow from an individual record (especially an action).</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>When this flag is FALSE, email may be sent using this flow.</description>
+        <name>StopEmailSend</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+</Flow>
